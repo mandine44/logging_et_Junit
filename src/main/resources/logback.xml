@@ -5,6 +5,7 @@
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			<!-- %logger correspond au nom du logger, donc generalement au nom de la classe (ou du package) qui a poussé le log -->
 			</pattern>
 		</encoder>
 	</appender>
@@ -12,7 +13,8 @@
 	<!-- redirection des logs vers la sortie fichier app.log -->
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>app.log</file>
-		<append>true</append>
+		<append>true</append> 
+		<!--  permet de ne pas ecraser le backlog existant -->
 		<immediateFlush>true</immediateFlush>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
@@ -22,10 +24,12 @@
 	
 	<!-- configuration du logger de fichier (nom et niveau) -->
 
+
 	<logger name="dev.service" level="TRACE" additivity="false">
+	<!-- logger name correspond au nom "choisi dans le code source, par convention le nom de la classe.
+	Je peux aussi choisir name = "dev", et je je configure tous les loggers qui sont dans les classes de ce package -->
 		<appender-ref ref="FILE" />
 	</logger>
-
 
 	<!-- regle de logs par defaut. Ici : niveau INFO vers la sortie standard -->
 	<root level="INFO">
